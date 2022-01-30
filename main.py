@@ -10,16 +10,16 @@ from twilio.rest import Client
 # Configurations
 X_MAX = 1436                # maximum x position
 Y_MAX = 900                 # maximum y position
-X_VEL = 20                   # default x velocity
+X_VEL = 20                  # default x velocity
 Y_VEL = 8                   # default y velocity
 X_IMG_SIZE = 100            # image width
 Y_IMG_SIZE = 100            # image height
 POKE_LIMIT = 3              # number of pokes before the monster gets angry
-ANGRY_ITERS = 100           # time monster is angry for before calming down
-STEAL_ITERS = 30            # time until monster gives the mouse back
+ANGRY_ITERS = 50           # time monster is angry for before calming down
+STEAL_ITERS = 20            # time until monster gives the mouse back
 IDLE_ALERT_ITERS = 1000     # time idle before the monster sends users a message
 CHASE_SPEED_MULTIPLIER = 4
-PETS_ITERS = 30
+PETS_ITERS = 20
 
 events = [
     {'name': 'excited', 'weight': 10,   'wait': 100,    'repeat': 5,    'dx': 0,    'dy': 0},
@@ -115,8 +115,9 @@ class Monster():
 
         self._check_idle()
 
-        if self._is_under_mouse() and self.is_stealing_mouse and self.event_id == get_event_id_by_name('sleep'):
+        if self.is_stealing_mouse and self.event_id == get_event_id_by_name('sleep'):
             self.is_stealing_mouse = False
+            self.has_mouse_iters = 0
         elif self._is_under_mouse() and not self.is_stealing_mouse and self.event_id != get_event_id_by_name('poke'):
             self.being_petted()
             return
