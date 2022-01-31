@@ -1,11 +1,11 @@
-import os
+#import os
 import random
 import time
 
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 import pyautogui
 import tkinter as tk
-from twilio.rest import Client
+#from twilio.rest import Client
 
 # Configurations
 X_MAX = 1436                # maximum x position
@@ -15,11 +15,11 @@ Y_VEL = 8                   # default y velocity
 X_IMG_SIZE = 100            # image width
 Y_IMG_SIZE = 100            # image height
 POKE_LIMIT = 3              # number of pokes before the monster gets angry
-ANGRY_ITERS = 50           # time monster is angry for before calming down
-STEAL_ITERS = 20            # time until monster gives the mouse back
-IDLE_ALERT_ITERS = 1000     # time idle before the monster sends users a message
+ANGRY_ITERS = 50            # time monster is angry for before calming down
+STEAL_ITERS = 40            # time until monster gives the mouse back
+IDLE_ALERT_ITERS = 5000     # time idle before the monster sends users a message
 CHASE_SPEED_MULTIPLIER = 4
-PETS_ITERS = 20
+PETS_ITERS = 30
 
 events = [
     {'name': 'excited', 'weight': 10,   'wait': 100,    'repeat': 5,    'dx': 0,    'dy': 0},
@@ -42,12 +42,14 @@ events = [
 
 # Helper functions
 def send_sms(client):
-    message = client.messages.create(
+    pass
+    '''client.messages.create(
         body='Hi there! Your desktop is still open. Hurry back or I might escape!',
         to='+14383348877',
         from_='+17853845636',
         media_url=['https://media.giphy.com/media/l6ugdYOC44rDyEieB5/giphy.gif'],
     )
+    '''
 
 def get_random_event_id():
     return random.choices(
@@ -280,15 +282,15 @@ class Monster():
 
 def main():
     # Twilio setup
-    load_dotenv()
-    twilio_account_sid = os.getenv('TWILIO_ACCOUNT_SID')
-    twilio_auth_token = os.getenv('TWILIO_AUTH_TOKEN')
-    client = Client(twilio_account_sid, twilio_auth_token)
+    #load_dotenv()
+    #twilio_account_sid = os.getenv('TWILIO_ACCOUNT_SID')
+    #twilio_auth_token = os.getenv('TWILIO_AUTH_TOKEN')
+    client = None#Client(twilio_account_sid, twilio_auth_token)
 
     window = tk.Tk()
 
     # Load GIFs
-    img_path = 'C:\\Users\\kirae\\Downloads\\imgs\\'
+    img_path = '.\\imgs\\'
     events[0]['frames'] = [tk.PhotoImage(file=img_path+'excited.gif',format='gif -index %i' %(i)) for i in range(2)]
     events[1]['frames'] = [tk.PhotoImage(file=img_path+'left.gif',format='gif -index %i' %(i)) for i in range(2)]
     events[2]['frames'] = [tk.PhotoImage(file=img_path+'left.gif',format='gif -index %i' %(i)) for i in range(2)]
