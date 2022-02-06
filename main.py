@@ -45,8 +45,6 @@ def send_sms(client):
     pass
     '''client.messages.create(
         body='Hi there! Your desktop is still open. Hurry back or I might escape!',
-        to='+14383348877',
-        from_='+17853845636',
         media_url=['https://media.giphy.com/media/l6ugdYOC44rDyEieB5/giphy.gif'],
     )
     '''
